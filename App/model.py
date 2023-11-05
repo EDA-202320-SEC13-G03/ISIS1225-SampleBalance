@@ -61,7 +61,8 @@ def newAnalyzer():
     analyzer["dateIndex"] = om.newMap(omaptype="RBT",
                                       comparefunction=compareDates)
     # TODO lab 9, crear el indice ordenado por areas reportadas
-    analyzer["REPORTING_AREA"]=
+     analyzer['areaIndex'] = om.newMap(omaptype='RBT',
+                                      comparefunction=compareDates)
     return analyzer
 
 
@@ -75,6 +76,7 @@ def addCrime(analyzer, crime):
     lt.addLast(analyzer["crimes"], crime)
     updateDateIndex(analyzer["dateIndex"], crime)
     # TODO lab 9, actualizar el indice por areas reportadas
+    updateAreaIndex(analyzer["areaIndex"], crime)
     return analyzer
 
 
