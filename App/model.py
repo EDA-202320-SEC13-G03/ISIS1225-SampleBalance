@@ -98,10 +98,13 @@ def updateAreaIndex(map, crime):
     if crimeria == "" or " " or None:
         crimeria= 9999
     entry = om.get(map, crimeria)
-    
-    
+    if entry is None:
+        datentry = newAreaEntry(crime)
+        om.put(map, crimeria, datentry)
+    else:
+        datentry = me.getValue(entry)
+    addAreaIndex(datentry, crime)
     return map
-
 
 def newAreaEntry(crime):
     """
