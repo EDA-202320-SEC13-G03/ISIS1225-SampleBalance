@@ -61,7 +61,7 @@ def newAnalyzer():
     analyzer["dateIndex"] = om.newMap(omaptype="RBT",
                                       comparefunction=compareDates)
     # TODO lab 9, crear el indice ordenado por areas reportadas
-     analyzer['areaIndex'] = om.newMap(omaptype='RBT',
+    analyzer['areaIndex'] = om.newMap(omaptype='RBT',
                                       comparefunction=compareDates)
     return analyzer
 
@@ -125,7 +125,7 @@ def addAreaIndex(area_entry, crime):
     Adiciona un crimen a la lista de crimenes de un area
     """
     # TODO lab 9, adicionar crimen a la lista de crimenes de un area
-     lst = area_entry["lstcrimes"]
+    lst = area_entry["lstcrimes"]
     lt.addLast(lst, crime)
     AreaIndex = area_entry["AreaIndex"]
     offentry = m.get(AreaIndex, crime["OFFENSE_CODE_GROUP"])
@@ -252,7 +252,8 @@ def indexHeightAreas(analyzer):
     Altura del arbol por areas
     """
     # TODO lab 9, leer la altura del arbol por areas
-    pass
+    
+    return om.height(analyzer["areaIndex"])
 
 
 def indexSizeAreas(analyzer):
@@ -260,15 +261,14 @@ def indexSizeAreas(analyzer):
     Numero de elementos en el indice por areas
     """
     # TODO lab 9, leer el numero de elementos en el indice por areas
-    pass
-
+    return om.size(analyzer["areaIndex"])
 
 def minKeyAreas(analyzer):
     """
     Llave mas pequena por areas
     """
     # TODO lab 9, leer la llave mas pequena por areas
-    pass
+    return om.minKey(analyzer["areaIndex"])
 
 
 def maxKeyAreas(analyzer):
@@ -276,7 +276,7 @@ def maxKeyAreas(analyzer):
     Llave mas grande por areas
     """
     # TODO lab 9, leer la llave mas grande por areas
-    pass
+    return om.maxKey(analyzer["areaIndex"])
 
 
 def getCrimesByRangeArea(analyzer, initialArea, finalArea):
@@ -285,7 +285,12 @@ def getCrimesByRangeArea(analyzer, initialArea, finalArea):
     """
     # TODO lab 9, completar la consulta de crimenes por rango de areas
     totalcrimes = 0
+    lst = om.values(analyzer["areaIndex"], initialArea, finalArea)
+    
+    for lstarea in lt.iterator(lst):
+        totalcrimes += lt.size(lstarea["lstcrimes"])
     return totalcrimes
+    
 
 
 def getCrimesByRange(analyzer, initialDate, finalDate):
